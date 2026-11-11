@@ -1,0 +1,21 @@
+# One-command local run: `docker compose up --build`, then
+#   python examples/mcp_client.py            (MCP)
+#   open http://localhost:8000/llms.txt      (discovery note)
+services:
+  contact:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      CONTACT_SITE_NAME: "example.com"
+      CONTACT_RECIPIENT_NAME: "the site owner"
+      CONTACT_SINKS: "file,console"
+      # CONTACT_SINKS: "webhook,file"
+      # CONTACT_WEBHOOK_URL: "https://hooks.example.com/contact"
+      # CONTACT_WEBHOOK_SECRET: set it in a .env file, never in this file
+    volumes:
+      - contact-data:/data
+    restart: unless-stopped
+
+volumes:
+  contact-data:

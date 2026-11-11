@@ -1,0 +1,10 @@
+# Pinned set the tests were run with (Python 3.12). `pip install -r requirements.txt`
+# installs these and the package itself (editable), so `contact-endpoint` and pytest work.
+mcp==1.30.0
+fastapi==0.162.4
+starlette==1.10.0
+uvicorn==0.54.0
+httpx==0.28.1
+anyio>=4,<5
+pytest>=8,<10
+-e .

@@ -1,0 +1,36 @@
+# Copy to contact.toml and point CONTACT_CONFIG at it. Environment variables
+# CONTACT_<NAME> override every key. The webhook secret is env-only
+# (CONTACT_WEBHOOK_SECRET) and is refused here on purpose.
+
+recipient_name = "Sam Owner"           # shown to agents in the tool description
+site_name = "example.com"
+public_base_url = "https://contact.example.com"   # links in /llms.txt; "" = relative
+
+host = "127.0.0.1"
+port = 8000
+trust_proxy_headers = false            # true only behind a reverse proxy you control
+client_ip_header = "x-real-ip"         # the ONE header that proxy overwrites (or "x-forwarded-for")
+
+allowed_origins = ["https://example.com"]   # browser form: exact Origin match + CORS
+
+# Ordered fallback chain: the first sink that accepts the message wins.
+sinks = ["webhook", "file"]
+file_sink_path = "data/outbox.jsonl"
+webhook_url = "https://hooks.example.com/contact"
+webhook_timeout_s = 10.0
+
+audit_db_path = "data/audit.sqlite"    # "" disables the audit log
+retention_days = 90
+audit_max_failed_per_ip = 200          # stored failed attempts per IP per window
+
+window_s = 86400
+form_max_per_ip = 5
+agent_max_per_ip = 20                  # agent egress IPs are shared, so wider
+agent_max_per_email = 3
+min_time_to_submit_s = 3.0
+max_urls_in_message = 2
+max_body_bytes = 8192
+
+mcp_dns_rebinding_protection = true
+mcp_allowed_hosts = ["contact.example.com"]
+mcp_max_body_bytes = 65536
